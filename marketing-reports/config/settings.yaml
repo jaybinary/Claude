@@ -1,0 +1,147 @@
+# =============================================================================
+# REPORT SETTINGS — marketing-reports
+# Rentokil PCI HiCare Automated Reporting System
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# GENERAL
+# -----------------------------------------------------------------------------
+general:
+  brand_name: "Rentokil PCI HiCare"
+  store_url: "https://pci-hicare.com"
+  timezone: "Asia/Kolkata"                          # IST
+  currency: "INR"
+  currency_symbol: "₹"
+  date_format: "%d %b %Y"                           # e.g. 20 Feb 2026
+  logo_url: "https://pci-hicare.com/logo.png"       # Used in HTML emails
+
+# -----------------------------------------------------------------------------
+# REPORT SCHEDULE (cron expressions — IST)
+# -----------------------------------------------------------------------------
+schedule:
+  daily:
+    cron: "0 8 * * *"                               # Every day at 8:00 AM IST
+    lookback_days: 1                                # Yesterday's data
+  weekly:
+    cron: "0 9 * * 1"                               # Every Monday at 9:00 AM IST
+    lookback_days: 7                                # Last 7 days
+  monthly:
+    cron: "0 9 1 * *"                               # 1st of every month at 9:00 AM IST
+    lookback_days: 30                               # Last 30 days
+
+# -----------------------------------------------------------------------------
+# METRICS & THRESHOLDS
+# Used to highlight good/bad performance in reports
+# -----------------------------------------------------------------------------
+thresholds:
+  roas:
+    good: 3.0                                       # ROAS >= 3 → green
+    warning: 2.0                                    # ROAS 2–3 → yellow
+    # Below 2 → red
+  ctr:
+    good: 2.0                                       # CTR >= 2% → green
+    warning: 1.0                                    # CTR 1–2% → yellow
+  cpc:
+    warning: 50.0                                   # CPC > ₹50 → yellow (INR)
+    bad: 100.0                                      # CPC > ₹100 → red
+  conversion_rate:
+    good: 3.0                                       # CR >= 3% → green
+    warning: 1.5                                    # CR 1.5–3% → yellow
+  aov:
+    target: 800.0                                   # Target AOV in INR
+
+# -----------------------------------------------------------------------------
+# GOOGLE ADS REPORT FIELDS
+# -----------------------------------------------------------------------------
+google_ads:
+  metrics:
+    - impressions
+    - clicks
+    - cost_micros
+    - conversions
+    - conversions_value
+    - average_cpc
+    - ctr
+    - average_cpm
+  segments:
+    - date
+    - campaign.name
+    - campaign.status
+  top_campaigns_limit: 10
+
+# -----------------------------------------------------------------------------
+# META ADS REPORT FIELDS
+# -----------------------------------------------------------------------------
+meta_ads:
+  metrics:
+    - impressions
+    - clicks
+    - spend
+    - actions
+    - action_values
+    - ctr
+    - cpc
+    - cpp
+    - reach
+    - frequency
+  breakdowns: []
+  level: "campaign"                                 # account / campaign / adset / ad
+  top_campaigns_limit: 10
+
+# -----------------------------------------------------------------------------
+# SHOPIFY REPORT FIELDS
+# -----------------------------------------------------------------------------
+shopify:
+  top_products_limit: 10
+  order_statuses:
+    - "paid"
+    - "partially_paid"
+  fulfillment_statuses:
+    - "fulfilled"
+    - "partial"
+    - "unfulfilled"
+
+# -----------------------------------------------------------------------------
+# GA4 REPORT FIELDS
+# -----------------------------------------------------------------------------
+ga4:
+  dimensions:
+    - date
+    - sessionDefaultChannelGroup
+    - deviceCategory
+  metrics:
+    - sessions
+    - screenPageViews
+    - addToCarts
+    - checkouts
+    - ecommercePurchases
+    - purchaseRevenue
+    - totalUsers
+    - bounceRate
+    - averageSessionDuration
+
+# -----------------------------------------------------------------------------
+# EMAIL REPORT APPEARANCE
+# -----------------------------------------------------------------------------
+email_template:
+  primary_color: "#E31837"                          # Rentokil red
+  secondary_color: "#1a1a2e"
+  font_family: "'Segoe UI', Arial, sans-serif"
+  max_width_px: 700
+
+# -----------------------------------------------------------------------------
+# DATA CACHE
+# -----------------------------------------------------------------------------
+cache:
+  enabled: true
+  directory: "data/cache"
+  ttl_hours: 6                                      # Cache TTL before re-fetch
+
+# -----------------------------------------------------------------------------
+# LOGGING
+# -----------------------------------------------------------------------------
+logging:
+  level: "INFO"                                     # DEBUG / INFO / WARNING / ERROR
+  directory: "logs"
+  max_file_size_mb: 10
+  backup_count: 7                                   # Keep 7 days of logs
